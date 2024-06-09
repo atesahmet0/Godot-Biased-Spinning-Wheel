@@ -31,7 +31,8 @@ func _draw():
 		var beta = (end + start) / 2
 		var delta  = radius
 		draw_set_transform(Vector2(delta * cos(beta), delta * sin(beta)), beta)
-		draw_string(default_font, Vector2(0, 0), "Deneme",HORIZONTAL_ALIGNMENT_LEFT)
+		draw_string(default_font, Vector2(0, 0), "Deneme", HORIZONTAL_ALIGNMENT_RIGHT, -1, 32)
+
 
 
 func _on_main_spin_wheel():
