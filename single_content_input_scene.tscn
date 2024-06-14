@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0vqguhtwf60t"]
+
+[ext_resource type="Script" path="res://single_content_input_scene.gd" id="1_q20f8"]
+
+[node name="SingleContentInput" type="HBoxContainer"]
+offset_right = 133.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+script = ExtResource("1_q20f8")
+
+[node name="Name" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+placeholder_text = "Ad"
+
+[node name="Weight" type="HSlider" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+
+[node name="Close" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Close"
+
+[connection signal="pressed" from="Close" to="." method="_on_close_pressed"]

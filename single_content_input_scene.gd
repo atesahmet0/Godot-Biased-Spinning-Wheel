@@ -1,6 +1,8 @@
-extends Node2D
+extends Control
 
-signal spin_wheel
+
+signal close(Control)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,9 +14,6 @@ func _process(delta):
 	pass
 
 
-func _on_button_pressed():
-	_spin_wheel()
-	pass # Replace with function body.
-	
-func _spin_wheel():
-	spin_wheel.emit()
+
+func _on_close_pressed():
+	close.emit(self)

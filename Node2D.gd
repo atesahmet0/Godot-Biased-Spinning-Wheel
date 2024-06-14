@@ -1,39 +1,78 @@
+@tool
 extends Node2D
 
 
-@export var arc_count = 4
 @export var radius = 150
 @export var antialiasing = true
 @export var default_font : Font = ThemeDB.fallback_font
 var colors = [Color.AQUA, Color.CADET_BLUE]
-var _is_spinnig = false
+var _is_spinning = false
+
+var content = [["Empty", 1]]
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	randomize()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if _is_spinnig:
-		rotation += delta
+	pass
 
 
 func _draw():
-	var alpha = TAU / arc_count
+	var alpha = TAU / content.size()
 	print("Alpha is: " + str(alpha))
-	for i in range(arc_count):
+	for i in range(content.size()):
 		draw_set_transform(Vector2(0, 0), 0)
 		var start = alpha * i
 		var end = alpha * (i + 1)
-		draw_arc(Vector2(0, 0), radius, alpha * i, alpha * (i + 1.05), 15, colors[i % colors.size()], 315, antialiasing)
+		draw_arc(Vector2(0, 0), radius, alpha * (i * 0.97), alpha * (i + 1.03), 15, colors[i % colors.size()], 315, antialiasing)
 		var beta = (end + start) / 2
-		var delta  = radius
+		var delta  = radius / 2
 		draw_set_transform(Vector2(delta * cos(beta), delta * sin(beta)), beta)
-		draw_string(default_font, Vector2(0, 0), "Deneme", HORIZONTAL_ALIGNMENT_RIGHT, -1, 32)
+		draw_string(default_font, Vector2(0, 0), content[i][0], HORIZONTAL_ALIGNMENT_RIGHT, -1, 32)
+		
+		# Draw inner circle
+		draw_set_transform(Vector2(0, 0), 0)
+		draw_circle(Vector2(0, 0), 30, Color.DARK_RED)
 
 
+func _spin_to(index: int):
+	if _is_spinning:
+		print("Wheel is already spinning")
+		return
+	
+	var alpha = TAU / content.size()
+	var beta = (content.size() - index - 0.5) * alpha + TAU / 4
+	
+	print("Determined index is: " + str(index))
+	rotation = beta
+	print("Beta is: " + str(rad_to_deg(beta)) + " alpha is: " + str(rad_to_deg(alpha)))
 
-func _on_main_spin_wheel():
-	_is_spinnig = !_is_spinnig
+
+func _pick_random_item():
+	var total_weight = 0
+	for i in range(content.size()):
+		total_weight += content[i][1]
+	
+	var random = randf()
+	total_weight *= random
+	print("Total weight: " + str(random) + " random is: " + str(random))
+	for i in range(content.size()):
+		total_weight -= content[i][1]
+		if total_weight <= 0:
+			return i
+	
+	print("There has been an error with the random algorithm")
+	return 0
+
+
+func set_content(new_content: Array[Array]):
+	content = new_content
+	queue_redraw()
+
+
+func spin_wheel():
+	_spin_to(_pick_random_item())

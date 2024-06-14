@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1u6hjxgcgliv"]
+
+[ext_resource type="Script" path="res://wheel_scene.gd" id="1_caxbr"]
+
+[sub_resource type="SystemFont" id="SystemFont_v75tt"]
+
+[node name="WheelScene" type="Node2D"]
+texture_filter = 3
+script = ExtResource("1_caxbr")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 441.0
+offset_top = 884.0
+offset_right = 741.0
+offset_bottom = 984.0
+size_flags_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_v75tt")
+theme_override_font_sizes/font_size = 36
+text = "Spin The Wheel"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
