@@ -1,4 +1,4 @@
-extends Control
+extends VBoxContainer
 
 
 var _single_content_input_field_scene = preload("res://single_content_input_scene.tscn")
@@ -23,7 +23,11 @@ func _process(delta):
 func _on_button_pressed():
 	# Save current content
 	print("Button is pressed and signal is emitted.")
-	content_changed.emit([["Works", 1]])
+	
+	var values = []
+	for i in range(input_fields.size()):
+		values.append(input_fields[i].get_content())
+	content_changed.emit(values)
 	user_exit.emit()
 
 

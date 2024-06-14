@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0vqguhtwf60t"]
+[gd_scene load_steps=2 format=3 uid="uid://dgyudm5j6elyx"]
 
 [ext_resource type="Script" path="res://single_content_input_scene.gd" id="1_q20f8"]
 
@@ -24,4 +24,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Close"
 
+[connection signal="value_changed" from="Weight" to="." method="_on_weight_value_changed"]
 [connection signal="pressed" from="Close" to="." method="_on_close_pressed"]

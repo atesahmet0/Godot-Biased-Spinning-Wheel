@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 var wheel_scene = preload("res://wheel_scene.tscn")
 var settings_scene = preload("res://settings_scene.tscn")
@@ -33,7 +33,8 @@ func _set_scene(new_scene: int):
 				_wheel_instance.queue_free()
 			_wheel_instance = _instantiate_wheel_scene(current_content)
 			add_child(_wheel_instance)
-			
+			_wheel_instance.set_content(current_content)
+		
 		self.SETTINGS_SCENE:
 			_current_scene = SETTINGS_SCENE
 			
@@ -54,12 +55,10 @@ func _instantiate_settings_scene():
 
 func _instantiate_wheel_scene(new_content):
 	var new_wheel = wheel_scene.instantiate()
-	new_wheel.set_content(current_content)
-	new_wheel.position = Vector2.ZERO
 	return new_wheel
 
 
-func _on_content_changed(new_content: Array[Array]):
+func _on_content_changed(new_content):
 	current_content = new_content
 
 

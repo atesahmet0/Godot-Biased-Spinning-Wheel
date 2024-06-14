@@ -1,7 +1,8 @@
 @tool
-extends Node2D
+extends Control
 
 
+@export var point_count: int = 150
 @export var radius = 150
 @export var antialiasing = true
 @export var default_font : Font = ThemeDB.fallback_font
@@ -28,11 +29,11 @@ func _draw():
 		draw_set_transform(Vector2(0, 0), 0)
 		var start = alpha * i
 		var end = alpha * (i + 1)
-		draw_arc(Vector2(0, 0), radius, alpha * (i * 0.97), alpha * (i + 1.03), 15, colors[i % colors.size()], 315, antialiasing)
+		draw_arc(Vector2.ZERO, radius, alpha * i, alpha * (i + 1), point_count, colors[i % colors.size()], 2 * radius, antialiasing)
 		var beta = (end + start) / 2
 		var delta  = radius / 2
 		draw_set_transform(Vector2(delta * cos(beta), delta * sin(beta)), beta)
-		draw_string(default_font, Vector2(0, 0), content[i][0], HORIZONTAL_ALIGNMENT_RIGHT, -1, 32)
+		draw_string(default_font, Vector2.ZERO, content[i][0], HORIZONTAL_ALIGNMENT_RIGHT, -1, 32)
 		
 		# Draw inner circle
 		draw_set_transform(Vector2(0, 0), 0)
@@ -48,7 +49,8 @@ func _spin_to(index: int):
 	var beta = (content.size() - index - 0.5) * alpha + TAU / 4
 	
 	print("Determined index is: " + str(index))
-	rotation = beta
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "rotation", rotation + beta + (randi_range(10, 30) * TAU), 2).set_trans(Tween.TRANS_SINE)
 	print("Beta is: " + str(rad_to_deg(beta)) + " alpha is: " + str(rad_to_deg(alpha)))
 
 
@@ -69,7 +71,7 @@ func _pick_random_item():
 	return 0
 
 
-func set_content(new_content: Array[Array]):
+func set_content(new_content):
 	content = new_content
 	queue_redraw()
 
