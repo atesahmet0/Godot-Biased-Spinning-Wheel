@@ -38,12 +38,14 @@ texture = ExtResource("3_6yc63")
 centered = false
 
 [node name="RingPlanet" type="Sprite2D" parent="."]
+visible = false
 texture_repeat = 3
 material = SubResource("ShaderMaterial_oba8u")
 texture = ExtResource("4_h7rb7")
 centered = false
 
 [node name="BigPlanet" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(170, 24)
 texture = ExtResource("5_q80dq")
 centered = false

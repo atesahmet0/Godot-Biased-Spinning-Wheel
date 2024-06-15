@@ -1,10 +1,18 @@
 @tool
 extends Control
 
+@export var antialiasing = true
 
+@export_category("Line Settings")
+@export var line_color: Color = Color.BLACK
+@export var line_width: int = 10
+@export var line_min_width: int = 4
+
+@export_category("Wheel Settings")
+@export var outer_ring_width: int = 10
+@export var outer_ring_color: Color = Color.WHITE_SMOKE
 @export var point_count: int = 150
 @export var radius = 150
-@export var antialiasing = true
 @export var default_font : Font = ThemeDB.fallback_font
 var colors = [Color.BLUE_VIOLET, Color.WEB_MAROON, Color.TEAL, Color.SLATE_BLUE]
 
@@ -29,20 +37,35 @@ func _process(delta):
 
 func _draw():
 	var alpha = TAU / content.size()
-	print("Alpha is: " + str(alpha))
+	var wheel_radius = 2 * radius
+	
 	for i in range(content.size()):
-		draw_set_transform(Vector2(0, 0), 0)
+		# Draw outer ring
+		# Old way buggy
+		# draw_circle(Vector2.ZERO, wheel_radius + outer_ring_width, outer_ring_color)
+		# Draw outer ring
+		draw_arc(Vector2.ZERO, wheel_radius + outer_ring_width, 0, TAU, point_count, outer_ring_color, outer_ring_width, antialiasing)
+		
 		var start = alpha * i
 		var end = alpha * (i + 1)
+		
 		draw_arc(Vector2.ZERO, radius, alpha * i, alpha * (i + 1), point_count, colors[i % colors.size()], 2 * radius, antialiasing)
 		var beta = (end + start) / 2
 		var delta  = radius / 2
 		draw_set_transform(Vector2(delta * cos(beta), delta * sin(beta)), beta)
 		draw_string(default_font, Vector2.ZERO, content[i][0], HORIZONTAL_ALIGNMENT_RIGHT, -1, 32)
+		draw_set_transform(Vector2(0, 0), 0)
+		
+		# Draw lines
+		var line_end = Vector2(2 * radius * cos(i * alpha), 2 * radius * sin(i * alpha))
+		draw_line(Vector2.ZERO, line_end, line_color, max(line_width / content.size(), line_min_width), antialiasing)
 		
 		# Draw inner circle
 		draw_set_transform(Vector2(0, 0), 0)
 		draw_circle(Vector2(0, 0), 30, Color.DARK_RED)
+		
+		# Outer ring of the inner circle
+		
 
 
 func _spin_to(index: int):
