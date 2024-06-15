@@ -6,8 +6,13 @@ extends Control
 @export var radius = 150
 @export var antialiasing = true
 @export var default_font : Font = ThemeDB.fallback_font
-var colors = [Color.AQUA, Color.CADET_BLUE]
-var _is_spinning = false
+var colors = [Color.BLUE_VIOLET, Color.WEB_MAROON, Color.TEAL, Color.SLATE_BLUE]
+
+# State
+const IDLE = 0
+const SPINNING = 1
+var state: int = IDLE
+
 
 var content = [["Empty", 1]]
 
@@ -41,7 +46,7 @@ func _draw():
 
 
 func _spin_to(index: int):
-	if _is_spinning:
+	if state == SPINNING:
 		print("Wheel is already spinning")
 		return
 	
@@ -51,6 +56,8 @@ func _spin_to(index: int):
 	print("Determined index is: " + str(index))
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "rotation", rotation + beta + (randi_range(10, 30) * TAU), 2).set_trans(Tween.TRANS_SINE)
+	state = SPINNING
+	tween.tween_callback(self._set_idle)
 	print("Beta is: " + str(rad_to_deg(beta)) + " alpha is: " + str(rad_to_deg(alpha)))
 
 
@@ -78,3 +85,7 @@ func set_content(new_content):
 
 func spin_wheel():
 	_spin_to(_pick_random_item())
+
+
+func _set_idle():
+	state = IDLE

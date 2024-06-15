@@ -16,7 +16,8 @@ func _init():
 func _ready():
 	_spinning_wheel = spinning_wheel_scene.instantiate()
 	add_child(_spinning_wheel)
-	move_child(_spinning_wheel, 0)
+	# Parallax bg at the 0 index 
+	move_child(_spinning_wheel, 1)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
