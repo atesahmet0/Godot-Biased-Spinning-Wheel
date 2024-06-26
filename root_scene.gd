@@ -28,11 +28,12 @@ func _set_scene(new_scene: int):
 			if _settings_instance:
 				remove_child(_settings_instance)
 			
-			if _wheel_instance:
+			if _wheel_instance and is_instance_valid(_wheel_instance):
 				# Refresh wheel to avoid unwanted behaviour
 				_wheel_instance.queue_free()
 			_wheel_instance = _instantiate_wheel_scene(current_content)
 			add_child(_wheel_instance)
+			_wheel_instance.open_settings.connect(self._open_settings)
 			_wheel_instance.set_content(current_content)
 		
 		self.SETTINGS_SCENE:
@@ -64,3 +65,7 @@ func _on_content_changed(new_content):
 
 func _on_user_exit_settings():
 	_set_scene(WHEEL_SCENE)
+
+
+func _open_settings():
+	_set_scene(SETTINGS_SCENE)

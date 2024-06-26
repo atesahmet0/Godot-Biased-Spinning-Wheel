@@ -1,9 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://br3dffemjgmsw"]
 
 [ext_resource type="Script" path="res://wheel_scene.gd" id="1_caxbr"]
-[ext_resource type="PackedScene" uid="uid://coo8kbuumlvkg" path="res://parallax.tscn" id="2_82nlb"]
-
-[sub_resource type="SystemFont" id="SystemFont_v75tt"]
+[ext_resource type="Texture2D" uid="uid://bcxdikcy12mbn" path="res://images/bg.jpg" id="2_sl3wm"]
+[ext_resource type="Texture2D" uid="uid://c53mb34ve4tfn" path="res://images/logo.png" id="3_jqvyg"]
 
 [node name="WheelScene" type="VBoxContainer"]
 texture_filter = 3
@@ -16,20 +15,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_caxbr")
 
-[node name="Parallax" parent="." instance=ExtResource("2_82nlb")]
-scale = Vector2(8, 8)
+[node name="Bg" type="Sprite2D" parent="."]
+position = Vector2(328, 753)
+scale = Vector2(2, 2)
+texture = ExtResource("2_sl3wm")
 
-[node name="Button" type="Button" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_fonts/font = SubResource("SystemFont_v75tt")
-theme_override_font_sizes/font_size = 36
-text = "Spin The Wheel"
+texture = ExtResource("3_jqvyg")
 
 [node name="Spacer" type="Control" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="SettingsTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="gui_input" from="TextureRect" to="." method="_on_texture_rect_gui_input"]
+[connection signal="timeout" from="SettingsTimer" to="." method="_on_settings_timer_timeout"]
