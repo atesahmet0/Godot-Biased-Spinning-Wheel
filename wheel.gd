@@ -18,7 +18,7 @@ extends Control
 @export var point_count: int = 150
 @export var radius = 150
 @export var default_font : Font = ThemeDB.fallback_font
-var colors = [Color.BLUE_VIOLET, Color.WEB_MAROON, Color.TEAL, Color.SLATE_BLUE]
+var colors = [Color.BLUE_VIOLET, Color.WEB_MAROON, Color.TEAL, Color.SLATE_BLUE, Color.FOREST_GREEN]
 
 # State
 const IDLE = 0
@@ -31,7 +31,6 @@ var content = [["Empty", 1]]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# rotation = 90
 	randomize()
 
 
@@ -85,7 +84,7 @@ func _spin_to(index: int):
 	
 	var tween = get_tree().create_tween()
 	rotation = 0
-	tween.tween_property(self, "rotation", beta + (randi_range(10, 30) * TAU), 2).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "rotation", beta + (randi_range(10, 30) * TAU), randf_range(0, 5)).set_trans(Tween.TRANS_SINE)
 	state = SPINNING
 	tween.tween_callback(self._set_idle)
 	print("Beta is: " + str(rad_to_deg(beta)) + " alpha is: " + str(rad_to_deg(alpha)))

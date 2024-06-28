@@ -20,11 +20,21 @@ position = Vector2(328, 753)
 scale = Vector2(2, 2)
 texture = ExtResource("2_sl3wm")
 
+[node name="TopSpacer2" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.2
 texture = ExtResource("3_jqvyg")
+stretch_mode = 5
 
-[node name="Spacer" type="Control" parent="."]
+[node name="TopSpacer" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25

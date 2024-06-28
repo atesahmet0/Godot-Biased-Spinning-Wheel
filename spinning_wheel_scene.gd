@@ -8,9 +8,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	rotation = TAU / 4
-	position = Vector2(475, 530)
-
+	rotation = TAU / 4 
+	scale = Vector2(0.65, 0.65)
 	pass
 
 

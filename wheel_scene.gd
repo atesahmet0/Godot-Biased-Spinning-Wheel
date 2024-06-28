@@ -18,14 +18,21 @@ func _init():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_spinning_wheel = spinning_wheel_scene.instantiate()
+	_spinning_wheel.size_flags_vertical = SIZE_SHRINK_CENTER ^ SIZE_EXPAND
+	_spinning_wheel.size_flags_horizontal = SIZE_SHRINK_CENTER ^ SIZE_EXPAND
+	_spinning_wheel.size_flags_stretch_ratio = 2
+	_spinning_wheel.scale = Vector2(0.5, 0.5)
+	_spinning_wheel.use_top_left = true
 	add_child(_spinning_wheel)
 	# Parallax bg and label above wheel 
-	move_child(_spinning_wheel, 2)
+	move_child(_spinning_wheel, 3)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if _spinning_wheel and is_instance_valid(_spinning_wheel):
+		# _spinning_wheel.rotation = TAU / 4
+		pass
 
 
 func _on_button_pressed():
